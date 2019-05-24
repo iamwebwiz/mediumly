@@ -25,6 +25,6 @@ Route::group([
     'namespace' => 'Admin',
     'as' => 'admin.',
 ], function () {
-    Route::get('/', 'HomeController@index');
+    Route::get('/', 'HomeController@index')->name('dashboard');
     Route::resource('articles', 'ArticleController');
 });
