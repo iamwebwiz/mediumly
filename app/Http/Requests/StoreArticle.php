@@ -25,6 +25,7 @@ class StoreArticle extends FormRequest
     {
         return [
             'title' => 'required|string|unique:articles',
+            'tags' => 'required',
             'content' => 'required',
         ];
     }
@@ -40,6 +41,7 @@ class StoreArticle extends FormRequest
             'title.required' => 'Title cannot be empty',
             'content.required' => 'Content cannot be empty',
             'title.unique' => 'This title already exist',
+            'tags.required' => 'The article should have at least one tag',
         ];
     }
 }

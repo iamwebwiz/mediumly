@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Article;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreArticle;
+use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
@@ -27,7 +29,8 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        return view('admin.articles.create');
+        $tags = Tag::all();
+        return view('admin.articles.create', compact('tags'));
     }
 
     /**
@@ -40,10 +43,20 @@ class ArticleController extends Controller
     {
         $validator = $request->validated();
 
-        $article = Article::create($request->all());
+        $article = Article::create([
+            'title' => $validator['title'],
+            'content' => $validator['content'],
+            'user_id' => Auth::id(),
+        ]);
+
+        $tags = collect($request->tags);
+
+        $tags->each(function ($tag) use ($article) {
+            $article->tags()->attach(Tag::firstOrCreate(['name' => strtolower($tag)])->id);
+        });
 
         session()->flash('success', 'Article created.');
-        return redirect()->route('admin.articles');
+        return redirect()->route('admin.articles.index');
     }
 
     /**
@@ -54,7 +67,7 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        //
+        return view('admin.articles.show', compact('article'));
     }
 
     /**
@@ -88,6 +101,9 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        //
+        $article->delete();
+
+        session()->flash('info', 'Article has been deleted.');
+        return back();
     }
 }
