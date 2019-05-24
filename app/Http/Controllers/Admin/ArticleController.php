@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Article;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreArticle;
+use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
@@ -35,9 +36,14 @@ class ArticleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreArticle $request)
     {
-        //
+        $validator = $request->validated();
+
+        $article = Article::create($request->all());
+
+        session()->flash('success', 'Article created.');
+        return redirect()->route('admin.articles');
     }
 
     /**
