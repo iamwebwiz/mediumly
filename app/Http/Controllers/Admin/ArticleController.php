@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Article;
+use App\FeaturedImage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreArticle;
 use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -51,9 +53,25 @@ class ArticleController extends Controller
 
         $tags = collect($request->tags);
 
-        $tags->each(function ($tag) use ($article) {
-            $article->tags()->attach(Tag::firstOrCreate(['name' => strtolower($tag)])->id);
+        $attachableTags = collect([]);
+
+        $tags->each(function ($tag) use ($attachableTags) {
+            $attachableTags->push(Tag::firstOrCreate(['name' => strtolower($tag)])->id);
         });
+
+        $article->tags()->attach($attachableTags);
+
+        // Handle image upload
+        $path = Storage::putFileAs(
+            'featured_images',
+            $request->file('featured_image'),
+            sha1($article->title) . '.' . $request->file('featured_image')->getClientOriginalExtension()
+        );
+
+        $featuredImage = new FeaturedImage;
+        $featuredImage->image = $path;
+
+        $article->featuredImage()->save($featuredImage);
 
         session()->flash('success', 'Article created.');
         return redirect()->route('admin.articles.index');
@@ -104,6 +122,6 @@ class ArticleController extends Controller
         $article->delete();
 
         session()->flash('info', 'Article has been deleted.');
-        return back();
+        return redirect()->back();
     }
 }

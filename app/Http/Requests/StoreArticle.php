@@ -27,6 +27,7 @@ class StoreArticle extends FormRequest
             'title' => 'required|string|unique:articles',
             'tags' => 'required',
             'content' => 'required',
+            'featured_image' => 'required',
         ];
     }
 
@@ -42,6 +43,7 @@ class StoreArticle extends FormRequest
             'content.required' => 'Content cannot be empty',
             'title.unique' => 'This title already exist',
             'tags.required' => 'The article should have at least one tag',
+            'featured_image.required' => 'The article must have a featured image',
         ];
     }
 }

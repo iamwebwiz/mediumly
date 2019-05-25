@@ -14,7 +14,7 @@
             <h4>Add Article</h4>
           </div>
           <div class="card-body">
-            <form action="{{ route('admin.articles.store') }}" method="POST">
+            <form action="{{ route('admin.articles.store') }}" method="POST" enctype="multipart/form-data">
               @csrf
               <div class="form-group">
                 <label for="title">Title</label>
@@ -22,11 +22,18 @@
               </div>
               <div class="form-group">
                 <label for="tags">Tags</label>
-                <select name="tags[]" multiple id="tags" class="form-control select2">
+                <select name="tags[]" multiple id="tags" class="custom-select select2">
                   @foreach ($tags as $tag)
                     <option value="{{ $tag->name }}">{{ $tag->name }}</option>
                   @endforeach
                 </select>
+              </div>
+              <div class="form-group">
+                <label for="">Featured Image</label>
+                <div class="custom-file">
+                  <label for="featuredImage" class="custom-file-label">Choose Image</label>
+                  <input type="file" name="featured_image" id="featuredImage" accept="image/*" class="custom-file-input">
+                </div>
               </div>
               <div class="form-group">
                 <label for="content">Content</label>
