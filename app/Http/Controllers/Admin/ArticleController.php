@@ -20,7 +20,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::all();
+        $articles = Article::orderBy('created_at', 'DESC')->get();
         return view('admin.articles.index', compact('articles'));
     }
 
@@ -61,8 +61,7 @@ class ArticleController extends Controller
 
         $article->tags()->attach($attachableTags);
 
-        // Handle image upload
-        $path = Storage::putFileAs(
+        $path = Storage::disk('public')->putFileAs(
             'featured_images',
             $request->file('featured_image'),
             sha1($article->title) . '.' . $request->file('featured_image')->getClientOriginalExtension()

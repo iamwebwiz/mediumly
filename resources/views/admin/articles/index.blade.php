@@ -16,7 +16,6 @@
             <div class="table-responsive">
               <table class="table table-striped">
                 <thead>
-                  <th>#</th>
                   <th>Title</th>
                   <th>Tags</th>
                   <th>Created At</th>
@@ -25,8 +24,14 @@
                 <tbody>
                   @foreach ($articles as $article)
                     <tr>
-                      <td>{{ $loop->iteration }}</td>
-                      <td>{{ $article->title }}</td>
+                      <td>
+                        <img src="{{ Storage::url($article->featuredImage['image']) }}"
+                          alt="{{ $article->title }}"
+                          class="img-fluid"
+                          style="width: 40px; height: 40px; border-radius: 50%">
+                          &nbsp;
+                        {{ $article->title }}
+                      </td>
                       <td>
                         @foreach ($article->tags as $tag)
                           <span class="badge badge-primary">{{ $tag->name }}</span>
@@ -34,12 +39,18 @@
                       </td>
                       <td>{{ $article->created_at->diffForHumans() }}</td>
                       <td>
-                        <a href="{{ route('admin.articles.show', $article->id) }}" class="btn btn-primary btn-sm">
-                          View
+                        <a href="{{ route('admin.articles.show', $article) }}" class="btn btn-primary btn-sm">
+                          {{ __('View') }}
                         </a>
-                        <a href="{{ route('admin.articles.destroy', $article->id) }}" class="btn btn-danger btn-sm">
-                          Delete
+                        <a href="{{ route('admin.articles.destroy', $article) }}"
+                          class="btn btn-danger btn-sm"
+                          onclick="event.preventDefault(); document.getElementById('destroy-article').submit();">
+                          {{ __('Delete') }}
                         </a>
+                        <form id="destroy-article" action="{{ route('admin.articles.destroy', $article) }}" method="post" style="display: none;">
+                          @csrf
+                          @method('DELETE')
+                        </form>
                       </td>
                     </tr>
                   @endforeach
