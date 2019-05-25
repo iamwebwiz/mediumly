@@ -6,7 +6,11 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <h4>{{ $article->title }}</h4>
+            <h4 class="float-left">{{ $article->title }}</h4>
+            <a href="{{ route('admin.articles.edit', $article) }}" class="btn btn-primary float-right">
+              Edit
+            </a>
+            <div class="clearfix"></div>
           </div>
           <div class="card-body">
             {!! $article->content !!}

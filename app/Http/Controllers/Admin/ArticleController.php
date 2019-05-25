@@ -6,6 +6,7 @@ use App\Article;
 use App\FeaturedImage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreArticle;
+use App\Http\Requests\UpdateArticle;
 use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -43,11 +44,11 @@ class ArticleController extends Controller
      */
     public function store(StoreArticle $request)
     {
-        $validator = $request->validated();
+        $validated = $request->validated();
 
         $article = Article::create([
-            'title' => $validator['title'],
-            'content' => $validator['content'],
+            'title' => $validated['title'],
+            'content' => $validated['content'],
             'user_id' => Auth::id(),
         ]);
 
@@ -95,7 +96,7 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
-        //
+        return view('admin.articles.edit', compact('article'));
     }
 
     /**
@@ -105,9 +106,16 @@ class ArticleController extends Controller
      * @param  \App\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Article $article)
+    public function update(UpdateArticle $request, Article $article)
     {
-        //
+        $validated = $request->validated();
+
+        $article->title = $validated['title'];
+        $article->content = $validated['content'];
+        $article->save();
+
+        session()->flash('success', 'Article has been updated.');
+        return redirect()->route('admin.articles.index');
     }
 
     /**
