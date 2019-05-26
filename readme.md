@@ -2,7 +2,7 @@
 
 > A minimalistic [Medium.com](https://medium.com) clone built with Laravel PHP Framework and Tailwind CSS
 
-### Installation
+## Installation
 
 -   Clone the repository
 
@@ -38,4 +38,12 @@ php artisan key:generate
 
 ```
 php artisan migrate
+```
+
+## Test
+
+Run tests with this command on your terminal:
+
+```
+composer test
 ```
