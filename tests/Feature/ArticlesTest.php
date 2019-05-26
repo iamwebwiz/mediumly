@@ -2,15 +2,16 @@
 
 namespace Tests\Feature;
 
-use App\Article;
 use App\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\UploadedFile;
+use App\Article;
 use Tests\TestCase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ArticlesTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, WithFaker;
 
     public function authenticatedAdmin(): User
     {
@@ -81,10 +82,10 @@ class ArticlesTest extends TestCase
         $file = UploadedFile::fake()->image('image.png');
 
         return $this->post($this->storeArticleRoute(), [
-            'title' => 'Test title',
-            'content' => 'Test content',
+            'title' => $this->faker->sentence,
+            'content' => $this->faker->paragraph,
             'user_id' => $this->authenticatedAdmin()->id,
-            'tags' => ['hello', 'fuck', 'shit'],
+            'tags' => $this->faker->words,
             'featured_image' => $file,
         ]);
     }
