@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class ArticlesTest extends TestCase
@@ -58,8 +57,6 @@ class ArticlesTest extends TestCase
 
     public function testStoreNewArticle()
     {
-        Storage::fake('featured_images');
-
         $this->actingAs($this->authenticatedAdmin())
             ->get($this->newArticleRoute());
 
@@ -72,8 +69,6 @@ class ArticlesTest extends TestCase
             'tags' => ['hello', 'fuck', 'shit'],
             'featured_image' => $file,
         ]);
-
-        Storage::disk('featured_images')->assertMissing('image.png');
 
         $response->assertSessionHas('success');
     }
