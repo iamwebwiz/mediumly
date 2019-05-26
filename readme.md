@@ -6,6 +6,6 @@
 
 -   Clone the repository
 
-```bash
+```shell
 git clone https://github.com/iamwebwiz/mediumly.git
 ```
