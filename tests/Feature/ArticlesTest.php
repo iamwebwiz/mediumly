@@ -145,4 +145,17 @@ class ArticlesTest extends TestCase
 
         $response->assertRedirect($this->articlesRoute());
     }
+
+    public function testDeleteArticle()
+    {
+        $this->actingAs($this->authenticatedAdmin());
+
+        $this->postNewArticle();
+
+        $article = $this->getLatestArticle();
+
+        $response = $this->delete($this->deleteArticleRoute($article));
+
+        $response->assertSessionHas('info');
+    }
 }
