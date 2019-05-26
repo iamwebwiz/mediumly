@@ -1,6 +1,6 @@
 # Mediumly
 
-> A minimalistic medium clone built with Laravel PHP Framework and Tailwind CSS
+> A minimalistic [Medium.com](https://medium.com) clone built with Laravel PHP Framework and Tailwind CSS
 
 ### Installation
 
