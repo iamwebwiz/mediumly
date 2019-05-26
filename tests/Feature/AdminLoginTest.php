@@ -3,8 +3,8 @@
 namespace Tests\Feature;
 
 use App\User;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class AdminLoginTest extends TestCase
 {
@@ -16,7 +16,7 @@ class AdminLoginTest extends TestCase
 
         $response = $this->actingAs($admin)->get('/admin');
 
-        $response->assertStatus(200);
+        $response->assertSuccessful();
 
         $this->assertAuthenticatedAs($admin);
     }

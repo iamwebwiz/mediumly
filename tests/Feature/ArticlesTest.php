@@ -4,35 +4,77 @@ namespace Tests\Feature;
 
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class ArticlesTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function authenticateAdmin()
+    public function authenticatedAdmin()
     {
         return factory(User::class)->states('admin')->create();
     }
 
-    public function articlesPage()
+    public function articlesRoute()
     {
         return route('admin.articles.index');
     }
 
-    public function newArticlePage()
+    public function newArticleRoute()
     {
         return route('admin.articles.create');
     }
 
+    public function storeArticleRoute()
+    {
+        return route('admin.articles.store');
+    }
+
     public function testShowArticles()
     {
-        $admin = $this->authenticateAdmin();
+        $response = $this->actingAs($this->authenticatedAdmin())
+            ->get($this->articlesRoute());
 
-        $response = $this->actingAs($admin)->get($this->articlesPage());
+        $response->assertViewIs('admin.articles.index');
 
         $response->assertViewHas('articles');
 
-        $response->assertStatus(200);
+        $response->assertSuccessful();
+    }
+
+    public function testShowNewArticlePage()
+    {
+        $response = $this->actingAs($this->authenticatedAdmin())
+            ->get($this->newArticleRoute());
+
+        $response->assertViewIs('admin.articles.create');
+
+        $response->assertViewHas('tags');
+
+        $response->assertSuccessful();
+    }
+
+    public function testStoreNewArticle()
+    {
+        Storage::fake('featured_images');
+
+        $this->actingAs($this->authenticatedAdmin())
+            ->get($this->newArticleRoute());
+
+        $file = UploadedFile::fake()->image('image.png');
+
+        $response = $this->post($this->storeArticleRoute(), [
+            'title' => 'Test title',
+            'content' => 'Test content',
+            'user_id' => $this->authenticatedAdmin()->id,
+            'tags' => ['hello', 'fuck', 'shit'],
+            'featured_image' => $file,
+        ]);
+
+        Storage::disk('featured_images')->assertMissing('image.png');
+
+        $response->assertSessionHas('success');
     }
 }

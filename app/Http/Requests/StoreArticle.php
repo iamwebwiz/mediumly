@@ -27,7 +27,7 @@ class StoreArticle extends FormRequest
             'title' => 'required|string|unique:articles',
             'tags' => 'required',
             'content' => 'required',
-            'featured_image' => 'required',
+            'featured_image' => 'required|image|mimes:jpg,jpeg,png',
         ];
     }
 
