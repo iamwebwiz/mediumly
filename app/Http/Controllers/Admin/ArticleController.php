@@ -21,7 +21,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::orderBy('created_at', 'DESC')->get();
+        $articles = Article::with(['tags', 'featuredImage'])->orderBy('created_at', 'DESC')->get();
         return view('admin.articles.index', compact('articles'));
     }
 

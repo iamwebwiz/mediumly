@@ -26,3 +26,8 @@ $factory->define(User::class, function (Faker $faker) {
         'is_admin' => false,
     ];
 });
+
+$factory->state(User::class, 'admin', [
+    'is_admin' => true,
+    'password' => bcrypt('securepass'),
+]);
