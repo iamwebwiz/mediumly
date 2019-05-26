@@ -15,7 +15,7 @@
           <div class="card-body">
             <form action="{{ route('admin.articles.update', $article) }}" method="post">
               @csrf
-              @method('PATCH')
+              @method('PUT')
               <div class="form-group">
                 <label for="title">Title</label>
                 <input type="text" name="title" value="{{ $article->title }}" class="form-control" id="title">
