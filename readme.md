@@ -42,6 +42,12 @@ Configure your database variables in `.env`
 php artisan migrate
 ```
 
+-   Create symbolic link to storage directory
+
+```
+php artisan storage:link
+```
+
 ## Demo
 
 Check out the demo [here](https://mediumly.herokuapp.com)
