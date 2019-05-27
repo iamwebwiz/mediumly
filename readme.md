@@ -34,11 +34,22 @@ composer install
 php artisan key:generate
 ```
 
+Configure your database variables in `.env`
+
 -   Run migrations
 
 ```
 php artisan migrate
 ```
+
+## Demo
+
+Check out the demo [here](https://mediumly.herokuapp.com)
+[Login](https://mediumly.herokuapp.com/login)
+
+Admin Credentials:
+Email: admin@mediumly.com
+Password: securepass
 
 ## Test
 
@@ -47,3 +58,5 @@ Run tests with this command on your terminal:
 ```
 composer test
 ```
+
+Cheers!!!
