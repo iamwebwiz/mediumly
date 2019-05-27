@@ -62,11 +62,9 @@ class ArticleController extends Controller
 
         $article->tags()->attach($attachableTags);
 
-        $path = Storage::disk('public')->putFileAs(
-            'featured_images',
-            $request->file('featured_image'),
-            sha1($article->title) . '.' . $request->file('featured_image')->getClientOriginalExtension()
-        );
+        $filename = $request->file('featured_image')->getClientOriginalName();
+
+        $path = $request->file('featured_image')->move(public_path('featured_images'), $filename);
 
         $featuredImage = new FeaturedImage;
         $featuredImage->image = $path;
