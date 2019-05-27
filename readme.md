@@ -50,8 +50,8 @@ php artisan storage:link
 
 ## Demo
 
-Check out the demo [here](https://mediumly.herokuapp.com)
-[Login](https://mediumly.herokuapp.com/login)
+-   Check out the demo [here](https://mediumly.herokuapp.com)
+-   [Login here](https://mediumly.herokuapp.com/login)
 
 Admin Credentials:
 Email: admin@mediumly.com
