@@ -25,7 +25,7 @@
                   @foreach ($articles as $article)
                     <tr>
                       <td>
-                        <img src="{{ Storage::url($article->featuredImage['image']) }}"
+                        <img src="{{ asset('/storage/'.$article->featuredImage['image']) }}"
                           alt="{{ $article->title }}"
                           class="img-fluid"
                           style="width: 40px; height: 40px; border-radius: 50%">
