@@ -53,9 +53,10 @@ php artisan storage:link
 -   Check out the demo [here](https://mediumly.herokuapp.com)
 -   [Login here](https://mediumly.herokuapp.com/login)
 
-Admin Credentials:
-Email: admin@mediumly.com
-Password: securepass
+**Admin Credentials**
+
+-   Email: admin@mediumly.com
+-   Password: securepass
 
 ## Test
 
