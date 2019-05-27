@@ -3,11 +3,7 @@
     <div class="container mx-auto pb-10">
       <navbar></navbar>
 
-      <img
-        :src="`/storage/${article.featured_image.image}`"
-        :alt="article.title"
-        class="w-full h-64 mb-5"
-      >
+      <img :src="`${article.featured_image.image}`" :alt="article.title" class="w-full h-64 mb-5">
 
       <p
         class="text-lg mb-8"

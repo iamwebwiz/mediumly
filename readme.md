@@ -36,16 +36,10 @@ php artisan key:generate
 
 Configure your database variables in `.env`
 
--   Run migrations
+-   Run migrations and seeders
 
 ```
-php artisan migrate
-```
-
--   Create symbolic link to storage directory
-
-```
-php artisan storage:link
+php artisan migrate --seed
 ```
 
 ## Demo

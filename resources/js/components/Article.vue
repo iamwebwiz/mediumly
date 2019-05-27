@@ -6,7 +6,7 @@
           <div class="mb-4">
             <img
               class="w-10 h-10 mr-3 rounded-full inline"
-              :src="`/storage/${article.featured_image.image}`"
+              :src="`${article.featured_image.image}`"
               :alt="article.title"
             >
             <h4 class="font-bold text-xl mb-2 inline">{{ article.title }}</h4>

@@ -67,7 +67,7 @@ class ArticleController extends Controller
         $path = $request->file('featured_image')->move(public_path('featured_images'), $filename);
 
         $featuredImage = new FeaturedImage;
-        $featuredImage->image = $path;
+        $featuredImage->image = "/featured_images/{$filename}";
 
         $article->featuredImage()->save($featuredImage);
 

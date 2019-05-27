@@ -1,1 +1,6 @@
 *!.gitignore
+*.jpg
+*.jpeg
+*.png
+*.bmp
+*.tiff
